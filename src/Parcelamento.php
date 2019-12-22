@@ -119,5 +119,8 @@ class Parcelamento {
     public function setPorcentagemJuros($porcentagemJuros) {
         $this->porcentagemJuros = $porcentagemJuros;
     }
+	
+	public function setnewParcs() {
+		$this->setParcelasSemJuros = "5";
     
 }
