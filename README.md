@@ -6,15 +6,15 @@ Módulo para gerar os recebíveis da transação. Possibilidade de:
  - Máximo de parcelas de acordo com o valor mínimo;
  - Cálculo de antecipação;
 
-## Criando um novo parcelamento
+## Gerando recebíveis de uma transação
 
 ```php
 <?php
 use Softpay\Parcelamento;
 
-$parcelamento = new spParcelamento(12, 6, 10.00, 2.75);
+$parcelamento = new Parcelamento($parcelas, $parcelasSemJuros, $valorTotal, $MDR);
         
-$parcelamento->gerarParcelas('5587.56');
+$parcelamento->gerarParcelas();
 
 ```
 >OU
