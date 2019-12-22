@@ -8,7 +8,8 @@ Módulo para gerar os recebíveis da transação. Possibilidade de:
  
 ## Instalando o pacote via Composer
 
-```composer require Softpay/Parcelamento
+```
+composer require Softpay/Parcelamento
 ```
 
 
@@ -23,7 +24,7 @@ $parcelamento = new Parcelamento($parcelas, $parcelasSemJuros, $valorTotal, $MDR
 $parcelamento->gerarParcelas();
 
 ```
->OU
+Método alternativo
 ```php
 <?php
 use Parcel\Parcelamento;
