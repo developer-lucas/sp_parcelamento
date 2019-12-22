@@ -1,15 +1,20 @@
 # Softpay - Módulo parcelamento
-Módulo para gerar o parcelamento, incluindo MDR e antecipação, em até 18x.
+Módulo para gerar os recebíveis da transação. Possibilidade de:
 
-## Criando um novo parcelamento
+ - Simulação de parcelamento (Com ou sem Juros) em até 18x, com ou sem antecipação;
+ - Geração dos recebíveis de uma transação;
+ - Máximo de parcelas de acordo com o valor mínimo;
+ - Cálculo de antecipação;
+
+## Gerando recebíveis de uma transação
 
 ```php
 <?php
 use Softpay\Parcelamento;
 
-$parcelamento = new spParcelamento(12, 6, 10.00, 2.75);
+$parcelamento = new Parcelamento($parcelas, $parcelasSemJuros, $valorTotal, $MDR);
         
-$parcelamento->gerarParcelas('5587.56');
+$parcelamento->gerarParcelas();
 
 ```
 >OU
