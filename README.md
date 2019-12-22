@@ -1,13 +1,13 @@
-# parcelamento-php
-Biblioteca para ajudar na geração de parcelas com juros e sem juros e arredondamento de parcelas em php.
+# Softpay - Módulo parcelamento
+Módulo para gerar o parcelamento, incluindo MDR e antecipação, em até 18x.
 
 ## Criando um novo parcelamento
 
 ```php
 <?php
-use Parcel\Parcelamento;
+use Softpay\Parcelamento;
 
-$parcelamento = new Parcelamento(12, 6, 10.00, 2.75);
+$parcelamento = new spParcelamento(12, 6, 10.00, 2.75);
         
 $parcelamento->gerarParcelas('5587.56');
 
