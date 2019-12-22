@@ -1,5 +1,10 @@
 # Softpay - Módulo parcelamento
-Módulo para gerar o parcelamento, incluindo MDR e antecipação, em até 18x.
+Módulo para gerar os recebíveis da transação. Possibilidade de:
+
+ - Simulação de parcelamento (Com ou sem Juros) em até 18x, com ou sem antecipação;
+ - Geração dos recebíveis de uma transação;
+ - Máximo de parcelas de acordo com o valor mínimo;
+ - Cálculo de antecipação;
 
 ## Criando um novo parcelamento
 
