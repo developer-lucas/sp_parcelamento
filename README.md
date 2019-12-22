@@ -5,6 +5,12 @@ Módulo para gerar os recebíveis da transação. Possibilidade de:
  - Geração dos recebíveis de uma transação;
  - Máximo de parcelas de acordo com o valor mínimo;
  - Cálculo de antecipação;
+ 
+## Instalando o pacote via Composer
+
+```composer require Softpay/Parcelamento
+```
+
 
 ## Gerando recebíveis de uma transação
 
