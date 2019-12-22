@@ -19,9 +19,9 @@ composer require Softpay/Parcelamento
 <?php
 use Softpay\Parcelamento;
 
-$parcelamento = new Parcelamento($parcelas, $parcelasSemJuros, $valorTotal, $MDR);
+$parcelamento = new Parcelamento($valorTotal, $parcelas, $parcelasSemJuros, $valorTotal, $MDR);
         
-$parcelamento->gerarParcelas();
+$parcelamento->gerarRecebiveis();
 
 ```
 Método alternativo
@@ -31,12 +31,13 @@ use Parcel\Parcelamento;
 
 $parcelamento = new Parcelamento();
 
-$parcelamento->setMaxParcelas(10);
+$parcelamento->setValorTotal(1000.00);
+$parcelamento->setParcelas(10);
 $parcelamento->setParcelasSemJuros(5);
-$parcelamento->setValorMinimoParcelar(50.00);
-$parcelamento->setPorcentagemJuros(2.50);
+$parcelamento->setParcelaMinima(50.00);
+$parcelamento->setMDR(2.50);
 
-$parcelamento->gerarParcelas('777.77');
+$parcelamento->gerarRecebiveis('777.77');
 
 ```
-Ainda faltam alguns ajustes no arredondamento, pois o php não trabalha muito bem com casas decimais.
+Módulo em fase beta! Não recomendado para utilização em produção.
