@@ -43,7 +43,11 @@ class ParcelamentoServiceProvider extends ServiceProvider
         $this->commands($this->commands);
 		
 		# Registrando nosso controller
-		$this->app->make('Softpay\Parcelamento\Http\Controllers\CalculatorController');
+		$this->app->make('Softpay\Parcelamento\Http\Controllers\ParcelamentoController');
+		
+		$this->app->bind('parcelamento', function($app) {
+      		return new Parcelamento();
+  		});
 		
     }
 	

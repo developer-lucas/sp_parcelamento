@@ -34,6 +34,8 @@ class Parcelamento extends Model {
 		# Taxa por parcela
 		$taxaPorParcela       = floor($this->MDR / $this->parcelas * 100) / 100;
 		
+		return $object;
+		
 	}
 	
 	# Cálculo de parcelas sem juros
