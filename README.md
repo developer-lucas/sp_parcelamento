@@ -28,7 +28,7 @@ $parcelamento = new Parcelamento($valorTotal, $parcelas, $parcelasSemJuros, $val
 $parcelamento->gerarRecebiveis();
 
 ```
-Método alternativo
+Ou se preferir:
 ```php
 <?php
 use Parcel\Parcelamento;
