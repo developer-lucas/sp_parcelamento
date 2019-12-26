@@ -16,6 +16,13 @@ Módulo para gerar os recebíveis da transação. Possibilidade de:
 composer require Softpay/Parcelamento
 ```
 
+# Funcionalidades disponíveis
+
+- Simulação de parcelamento: $parcelamento->simularVenda($valorTotal, $parcelas, $mdr);
+- Gerar recebíveis: $parcelamento->gerarRecebiveis($valorTotal, $parcelas, $parcelasSemJuros, $valorTotal, $MDR);
+- Antecipar recebíveis: $parcelamento->gerarAntecipacao($valorTotal, $parcelas, $mdr);
+- 
+
 ## Retorno das informações
 
 ```
