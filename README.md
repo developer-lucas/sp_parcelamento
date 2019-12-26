@@ -44,4 +44,4 @@ $parcelamento->setMDR(2.50);
 $parcelamento->gerarRecebiveis('777.77');
 
 ```
-Módulo em fase beta! Não recomendado para utilização em produção.
+
