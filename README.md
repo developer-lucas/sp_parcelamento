@@ -1,4 +1,8 @@
-# Softpay - Módulo parcelamento
+<p align="center">
+ <a href="https://www.softpay.com.br"><img src="https://console.europag.com.br/assets/images/softpay.png" title="Softpay" alt="Softpay"></a>
+</p>
+
+# Módulo parcelamento
 Módulo para gerar os recebíveis da transação. Possibilidade de:
 
  - Simulação de parcelamento (Com ou sem Juros) em até 18x, com ou sem antecipação;
