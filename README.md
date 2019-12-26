@@ -2,6 +2,8 @@
  <a href="https://www.softpay.com.br"><img src="https://console.europag.com.br/assets/images/softpay.png" title="Softpay" alt="Softpay"></a>
 </p>
 
+A Softpay Tecnologia em meios de pagamentos é uma empresa especializada no fornecimento de tecnologias para Adquirentes e Subadquirentes. Atualmente são mais de 40 milhões de vendas processadas todos os anos.
+
 # Módulo parcelamento
 Módulo para gerar os recebíveis da transação. Possibilidade de:
 
@@ -21,7 +23,7 @@ composer require Softpay/Parcelamento
 - Simulação de parcelamento: $parcelamento->simularVenda($valorTotal, $parcelas, $mdr);
 - Gerar recebíveis: $parcelamento->gerarRecebiveis($valorTotal, $parcelas, $parcelasSemJuros, $valorTotal, $MDR);
 - Antecipar recebíveis: $parcelamento->gerarAntecipacao($valorTotal, $parcelas, $mdr);
-- 
+
 
 ## Retorno das informações
 
