@@ -7,7 +7,7 @@
 		"email": "lucas@softpay.com.br"
 	}],
 	"require": {
-
+		"php": ">=5.5.0"
 	},
 	"autoload": {
 		"psr-4": {
@@ -25,11 +25,13 @@
 				"Softpay\\Parcelamento\\ParcelamentoServiceProvider"
 			],
 			"aliases": {
-            	"Parcelamento": "Softpay\\Parcelamento\\Facades\\Parcelamento"
+            	"Parcelamento": "Softpay\\Parcelamento\\Facades"
         	}
 		}
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^8.5"
-	}
+	},
+	"license": "MIT",
+    "minimum-stability": "stable"
 }

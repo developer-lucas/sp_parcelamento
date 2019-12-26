@@ -3,6 +3,7 @@
 namespace Softpay\Parcelamento;
 
 use Illuminate\Support\ServiceProvider;
+use Softpay\Parcelamento\Services\Recebiveis;
 
 
 /*********************************************************************************************************
@@ -29,25 +30,27 @@ class ParcelamentoServiceProvider extends ServiceProvider
     
     public function boot()
     {
-		# Inicializando o arquivo de parcelamento junto com o pacote
-        $this->publishes([
-            __DIR__.'/../config/Parcelamento.php' => config_path('Parcelamento.php'),
-        ]);
+		if ($this->app->runningInConsole()) {
+			
+			$this->publishes([
+            	__DIR__.'/../config/Parcelamento.php' => config_path('Parcelamento.php'),
+			]);
+			
+		};
 		
     }
     
     public function register()
     {
+				
 		# Registrando o arquivo de configuração do nosso pacote
-        $this->mergeConfigFrom(__DIR__.'/../config/Parcelamento.php', 'Parcelamento');
+        $this->mergeConfigFrom(__DIR__.'/../config/Parcelamento.php', 'Config');
         $this->commands($this->commands);
 		
-		# Registrando nosso controller
-		$this->app->make('Softpay\Parcelamento\Http\Controllers\ParcelamentoController');
-		
-		$this->app->bind('parcelamento', function($app) {
-      		return new Parcelamento();
-  		});
+		# Registrando os serviços disponíveis no pacote
+		$this->app->singleton('recebiveis', function ($app) {
+        	return new Recebiveis($app);
+    	});
 		
     }
 	
