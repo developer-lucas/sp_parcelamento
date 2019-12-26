@@ -16,6 +16,17 @@ Módulo para gerar os recebíveis da transação. Possibilidade de:
 composer require Softpay/Parcelamento
 ```
 
+## Retorno das informações
+
+```
+grossAmount  : Valor bruto da venda.
+netAmount    : Valor líquido, descontado o MDR.
+fee          : MDR aplicado sobre o valor total da venda.
+installments : Array de parcelas (fee, installment e amount).
+
+* Todos os valores são retornados sem pontos ou vírgula, incluindo os centavos (Ex: R$160,00 => 16000).
+
+```
 
 ## Gerando recebíveis de uma transação
 
