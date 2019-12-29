@@ -6,7 +6,7 @@ A Softpay Tecnologia em meios de pagamentos é uma empresa especializada no forn
 
 # Módulo Recebíveis
 
-Esse módulo foi desenvolvimento para calcular e gerar recebíveis de uma transação. 
+Esse módulo foi desenvolvimento para calcular e gerar recebíveis de uma transação de cartão de crédito, parcelada em até 18x. 
 
 # Funcionalidades disponíveis
 
