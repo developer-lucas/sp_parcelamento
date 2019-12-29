@@ -4,6 +4,8 @@ namespace Softpay\Parcelamento;
 
 use Illuminate\Support\ServiceProvider;
 use Softpay\Parcelamento\Services\Parcelamento;
+use Softpay\Parcelamento\Files\Filesystem;
+use Softpay\Parcelamento\Files\TemporaryFileFactory;
 
 
 /*********************************************************************************************************
@@ -46,6 +48,17 @@ class ParcelamentoServiceProvider extends ServiceProvider
 		# Registrando o arquivo de configuração do nosso pacote
         $this->mergeConfigFrom(__DIR__.'/../config/Parcelamento.php', 'Config');
         $this->commands($this->commands);
+		
+		$this->app->bind(TemporaryFileFactory::class, function () {
+            return new TemporaryFileFactory(
+                config('temporary_files.local_path', config('exports.temp_path', storage_path('framework/softpay-logs'))),
+                config('temporary_files.remote_disk')
+            );
+        });
+		
+		$this->app->bind(Filesystem::class, function () {
+            return new Filesystem($this->app->make('filesystem'));
+        });
 		
 		# Registrando os serviços disponíveis no pacote
 		$this->app->singleton('parcelamento', function ($app) {
