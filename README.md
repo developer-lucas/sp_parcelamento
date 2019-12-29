@@ -2,8 +2,13 @@
  <a href="https://www.softpay.com.br"><img src="https://console.europag.com.br/assets/images/softpay.png" title="Softpay" alt="Softpay"></a>
 </p>
 
-# Módulo parcelamento
-Módulo para gerar os recebíveis da transação. Possibilidade de:
+A Softpay Tecnologia em meios de pagamentos é uma empresa especializada no fornecimento de tecnologias para Adquirentes e Subadquirentes. Atualmente são mais de 40 milhões de vendas processadas todos os anos.
+
+# Módulo Recebíveis
+
+Esse módulo foi desenvolvimento para calcular e gerar recebíveis de uma transação através do framework Laravel. 
+
+# Funcionalidades disponíveis
 
  - Simulação de parcelamento (Com ou sem Juros) em até 18x, com ou sem antecipação;
  - Geração dos recebíveis de uma transação;
@@ -16,6 +21,17 @@ Módulo para gerar os recebíveis da transação. Possibilidade de:
 composer require Softpay/Parcelamento
 ```
 
+## Retorno das informações
+
+```
+grossAmount  : Valor bruto da venda.
+netAmount    : Valor líquido, descontado o MDR.
+fee          : MDR aplicado sobre o valor total da venda.
+installments : Array de parcelas (fee, installment e amount).
+
+* Todos os valores são retornados sem pontos ou vírgula, incluindo os centavos (Ex: R$160,00 => 16000).
+
+```
 
 ## Gerando recebíveis de uma transação
 
@@ -28,7 +44,7 @@ $parcelamento = new Parcelamento($valorTotal, $parcelas, $parcelasSemJuros, $val
 $parcelamento->gerarRecebiveis();
 
 ```
-Método alternativo
+Ou se preferir:
 ```php
 <?php
 use Parcel\Parcelamento;
@@ -44,4 +60,4 @@ $parcelamento->setMDR(2.50);
 $parcelamento->gerarRecebiveis('777.77');
 
 ```
-Módulo em fase beta! Não recomendado para utilização em produção.
+
