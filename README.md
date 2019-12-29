@@ -6,7 +6,7 @@ A Softpay Tecnologia em meios de pagamentos é uma empresa especializada no forn
 
 # Módulo Recebíveis
 
-Esse módulo foi desenvolvimento para calcular e gerar recebíveis de uma transação através do framework Laravel. 
+Esse módulo foi desenvolvimento para calcular e gerar recebíveis de uma transação. 
 
 # Funcionalidades disponíveis
 
@@ -14,6 +14,7 @@ Esse módulo foi desenvolvimento para calcular e gerar recebíveis de uma transa
  - Geração dos recebíveis de uma transação;
  - Máximo de parcelas de acordo com o valor mínimo;
  - Cálculo de antecipação;
+ - Suporte a Framework Laravel;
  
 ## Instalando o pacote via Composer
 
@@ -37,9 +38,9 @@ installments : Array de parcelas (fee, installment e amount).
 
 ```php
 <?php
-use Softpay\Parcelamento;
+use Softpay\Parcelamento\Recebiveis;
 
-$parcelamento = new Parcelamento($valorTotal, $parcelas, $parcelasSemJuros, $valorTotal, $MDR);
+$parcelamento = new Recebiveis($valorTotal, $parcelas, $parcelasSemJuros, $valorTotal, $MDR);
         
 $parcelamento->gerarRecebiveis();
 
@@ -47,9 +48,9 @@ $parcelamento->gerarRecebiveis();
 Ou se preferir:
 ```php
 <?php
-use Parcel\Parcelamento;
+use Parcel\Parcelamento\Recebiveis;
 
-$parcelamento = new Parcelamento();
+$parcelamento = new Recebiveis();
 
 $parcelamento->setValorTotal(1000.00);
 $parcelamento->setParcelas(10);
