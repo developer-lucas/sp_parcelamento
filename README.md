@@ -6,7 +6,7 @@ A Softpay Tecnologia em meios de pagamentos é uma empresa especializada no forn
 
 # Módulo Recebíveis
 
-Esse módulo foi desenvolvimento para calcular e gerar recebíveis de uma transação através do framework Laravel. 
+Esse módulo foi desenvolvimento para calcular e gerar recebíveis de uma transação. 
 
 # Funcionalidades disponíveis
 
@@ -14,6 +14,7 @@ Esse módulo foi desenvolvimento para calcular e gerar recebíveis de uma transa
  - Geração dos recebíveis de uma transação;
  - Máximo de parcelas de acordo com o valor mínimo;
  - Cálculo de antecipação;
+ - Suporte a Framework Laravel;
  
 ## Instalando o pacote via Composer
 
