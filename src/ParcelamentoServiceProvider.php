@@ -3,7 +3,7 @@
 namespace Softpay\Parcelamento;
 
 use Illuminate\Support\ServiceProvider;
-use Softpay\Parcelamento\Services\Recebiveis;
+use Softpay\Parcelamento\Services\Parcelamento;
 
 
 /*********************************************************************************************************
@@ -48,8 +48,8 @@ class ParcelamentoServiceProvider extends ServiceProvider
         $this->commands($this->commands);
 		
 		# Registrando os serviços disponíveis no pacote
-		$this->app->singleton('recebiveis', function ($app) {
-        	return new Recebiveis($app);
+		$this->app->singleton('parcelamento', function ($app) {
+        	return new Parcelamento($app);
     	});
 		
     }
