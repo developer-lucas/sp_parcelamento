@@ -37,9 +37,9 @@ installments : Array de parcelas (fee, installment e amount).
 
 ```php
 <?php
-use Softpay\Parcelamento;
+use Softpay\Parcelamento\Recebiveis;
 
-$parcelamento = new Parcelamento($valorTotal, $parcelas, $parcelasSemJuros, $valorTotal, $MDR);
+$parcelamento = new Recebiveis($valorTotal, $parcelas, $parcelasSemJuros, $valorTotal, $MDR);
         
 $parcelamento->gerarRecebiveis();
 
@@ -47,9 +47,9 @@ $parcelamento->gerarRecebiveis();
 Ou se preferir:
 ```php
 <?php
-use Parcel\Parcelamento;
+use Parcel\Parcelamento\Recebiveis;
 
-$parcelamento = new Parcelamento();
+$parcelamento = new Recebiveis();
 
 $parcelamento->setValorTotal(1000.00);
 $parcelamento->setParcelas(10);
