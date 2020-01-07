@@ -58,7 +58,7 @@ $parcelamento->setParcelasSemJuros(5);
 $parcelamento->setParcelaMinima(50.00);
 $parcelamento->setMDR(2.50);
 
-$parcelamento->gerarRecebiveis('777.77');
+$parcelamento->gerarRecebiveis();
 
 ```
 
