@@ -154,7 +154,7 @@ class Recebiveis {
 	
 	########## Métodos SET ##############
 	public function setValorTotal($valorTotal){
-		$this->valorTotal = str_replace(".", "", $this->valorTotal);
+		$this->valorTotal = str_replace(".", "", $valorTotal);
 	}
 	
 	public function setParcelas($parcelas) {
