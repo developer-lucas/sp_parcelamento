@@ -47,7 +47,7 @@ class Recebiveis {
 		$object = new \stdClass();	
 		
 		# Valor total da transação
-		$object->grossAmount = str_replace(".", "", $this->valorTotal / 100);	
+		$object->grossAmount = str_replace(".", "", $this->valorTotal);	
 		
 		# Valor líquido da transação
 		$object->netAmount = str_replace(".", "", ltrim($calculoParcelas->valorLiquido, "0"));			
