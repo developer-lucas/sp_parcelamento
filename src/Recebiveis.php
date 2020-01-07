@@ -44,7 +44,7 @@ class Recebiveis {
 	public function gerarRecebiveis(){
 		
 		# Calcula o valor por parcela
-		$calculoParcelas = $this->parcelasComMDR();
+		$calculoParcelas = $this->aplicaMDR();
 		
 		# Cria um array das parcelas
 		$parcelas = array();
@@ -87,50 +87,74 @@ class Recebiveis {
 		
 	}
 	
+	# Verifica a soma das taxas
+	private function validaTaxas($object) {
+		
+		# Soma das taxas
+		$somaTaxas = $object->taxaPrimeiraParcela + ($object->taxaPorParcela * ($this->parcelas - 1));
+		
+		# Se a soma das parcelas ultrapassar o valor líquido
+		if ($somaTaxas > $object->descontoMDR) {
+			$object->taxaPrimeiraParcela = $object->taxaPrimeiraParcela - ($somaTaxas - $object->valorLiquido);
+		};
+		
+		# Se a soma das parcelas for menor que o valor líquido
+		if ($somaTaxas < $object->descontoMDR){
+			$object->taxaPrimeiraParcela = $object->descontoMDR - ($object->descontoMDR - $somaTaxas);
+		}
+		
+	}
+	
+	# Verifica se a soma das parcelas corresponde com o netAmount
+	private function validaParcelas($object) {
+				
+		# Soma das parcelas	
+		$somaParcelas = $object->parcelas['primeira'] + ($object->parcelas['demais'] * ($this->parcelas - 1));
+						
+		# Se a soma das parcelas ultrapassar o valor líquido
+		if ($somaParcelas > $object->valorLiquido) {
+			$object->parcelas['primeira'] = $object->parcelas['primeira'] - ($somaParcelas - $object->valorLiquido);
+		};
+		
+		# Se a soma das parcelas for menor que o valor líquido
+		if ($somaParcelas < $object->valorLiquido){
+			$object->parcelas['primeira'] = $object->valorLiquido - ($object->valorLiquido - $somaParcelas);
+		}
+		
+	}
+	
 	# Cálcula a taxa por parcela
 	private function aplicaMDR() {
 		
 		# Inicializa o objeto a ser retornado
-		$object 			         = new \stdClass();
+		$object 			          = new \stdClass();
 		
-		# Aplica o MDR para calcular o desconto a ser aplicado
-		$taxaDesconto 		         =  number_format(floor(($this->valorTotal / 100 * $this->mdr) * 100) / 100, 2, '.', '');	
+		# Adiciona as variáveis no objeto a ser retornado
+   		$object->descontoMDR 	      = (int) str_replace(".", "", number_format($this->valorTotal / 100 * $this->mdr, 2));	
 		
 		# Valor líquido da transação
-		$object->valorLiquido        = number_format($this->valorTotal - $taxaDesconto, 2, ".", "");
+		$object->valorLiquido         = (int) str_replace(".", "", number_format($this->valorTotal - ($object->descontoMDR / 100), 2, ".", ""));
+					
+		# Desconto que deve ser aplicado por parcela
+		$object->taxaPorParcela       = (int) str_replace(".", "", number_format(($object->descontoMDR / 100) / $this->parcelas, 2, ".", ""));
+				
+		# Verifica se existe sobra na divisão da taxa de desconto / parcela
+		$object->taxaPrimeiraParcela  = (int) str_replace(".", "", number_format(($object->descontoMDR / 100) - (($object->taxaPorParcela / 100) * ($this->parcelas - 1)), 2, ".", ""));
+				
+		# Calcula o valor por parcela
+		$object->parcelas['demais']   = (int) str_replace(".", "", number_format(($object->valorLiquido / 100) / $this->parcelas, 2, ".", ""));
 		
 		# Adiciona as variáveis no objeto a ser retornado
-   		$object->descontoMDR 	     = $taxaDesconto;
+   		$object->parcelas['primeira'] = (int) str_replace(".", "", number_format(($object->valorLiquido / 100) - floor(( (($object->parcelas['demais'] / 100) * ($this->parcelas - 1))) * 100) / 100, 2, ".", ""));
+				
+		# Verifica os cálculos das parcelas
+		$this->validaParcelas($object);
 		
-		# Desconto que deve ser aplicado por parcela
-		$object->taxaPorParcela      = number_format(floor(($taxaDesconto / $this->parcelas) * 100) / 100, 2, ".", "");
+		# Verifica os cálculos das taxas
+		$this->validaTaxas($object);
 		
-		# Verifica se existe sobra na divisão da taxa de desconto / parcela
-		$object->taxaPrimeiraParcela = number_format($taxaDesconto - floor(($object->taxaPorParcela * ($this->parcelas - 1)) * 100) / 100, 2, ".", "");
-						
 		# Retorna o objeto
 		return $object;
-		
-	}
-	
-	# Cálculo de parcelas com juros
-	private function parcelasComMDR(){		
-		
-		# Valor líquido da venda, já descontado o MDR
-		$object = $this->aplicaMDR();
-		
-		# Calcula o valor por parcela
-		$valorPorParcela 	    = number_format($object->valorLiquido / $this->parcelas, 2, ".", "");				
-				
-		# Adiciona as variáveis no objeto a ser retornado
-   		$object->parcelas['primeira'] = number_format($object->valorLiquido - floor(( ($valorPorParcela * ($this->parcelas - 1))) * 100) / 100, 2, ".", "");
-		
-		# Sobra da divisão das parcelas
-		$object->parcelas['demais']  = $valorPorParcela;
-						
-		# Retorna o objeto
-		return $object;	
-		
 		
 	}
 	
