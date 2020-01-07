@@ -56,18 +56,20 @@ class Recebiveis {
 		$object->fee = str_replace(".", "", ltrim($calculoParcelas->descontoMDR, "0"));	
 		
 		# Caso seja apenas uma parcela
-		$parcelas[1] = [
-			'fee' 	 => str_replace(".", "", ltrim($calculoParcelas->taxaPrimeiraParcela, "0")),
-			'amount' => str_replace(".", "", ltrim($calculoParcelas->valorPrimeiraParcela, "0"))
+		$parcelas[] = [
+			'fee' 	      => str_replace(".", "", ltrim($calculoParcelas->taxaPrimeiraParcela, "0")),
+			'amount'      => str_replace(".", "", ltrim($calculoParcelas->valorPrimeiraParcela, "0")),
+			'installment' => 1
 		];			
 		
 		# Calcula as demais parcelas
 		for ( $i = 2; $i <= $this->parcelas; $i++ ) {
 							
 			# Adiciona as parcelas dentro do objeto installments
-			$parcelas[$i] = [
-				'fee'    => str_replace(".", "", ltrim($calculoParcelas->taxaPorParcela, "0")),
-			    'amount' => str_replace(".", "", ltrim($calculoParcelas->valorPorParcela, "0"))
+			$parcelas[] = [
+				'fee'         => str_replace(".", "", ltrim($calculoParcelas->taxaPorParcela, "0")),
+			    'amount'      => str_replace(".", "", ltrim($calculoParcelas->valorPorParcela, "0")),
+				'installment' => $i
 			];	
 				
 			 	
