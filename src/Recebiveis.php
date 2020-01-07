@@ -20,7 +20,7 @@ class Recebiveis {
 	# Método construtor (Parâmetros necessários para utilizar a função)
 	public function __construct($valorTotal = 0, $parcelas = 1, $parcelasSemJuros = 0, $parcelaMinima = 0, $mdr = 0){
 				
-		$this->valorTotal        = str_replace(".", "", $this->valorTotal);
+		$this->valorTotal        = str_replace(".", "", $valorTotal);
         $this->parcelas          = $parcelas;
         $this->parcelasSemJuros  = $parcelasSemJuros;
         $this->parcelaMinima     = number_format($parcelaMinima, 2, '.', '');
