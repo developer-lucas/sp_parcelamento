@@ -77,7 +77,7 @@ class Recebiveis {
 		$object->put('installments', $parcelas);
 		
 		# Retorna o objeto
-		return $object;
+		return json_encode($object);
 		
 	}
 	
