@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Softpay\Parcelamento\Services\Parcelamento;
 use Softpay\Parcelamento\Files\Filesystem;
 use Softpay\Parcelamento\Files\TemporaryFileFactory;
-
+use Softpay\Parcelamento\Validation;
 
 /*********************************************************************************************************
  * Os provedores de serviços são o local central de toda a inicialização do aplicativo Laravel.          *
@@ -56,6 +56,7 @@ class ParcelamentoServiceProvider extends ServiceProvider
             );
         });
 		
+		# Registra o sistema de arquivos
 		$this->app->bind(Filesystem::class, function () {
             return new Filesystem($this->app->make('filesystem'));
         });
@@ -64,6 +65,7 @@ class ParcelamentoServiceProvider extends ServiceProvider
 		$this->app->singleton('parcelamento', function ($app) {
         	return new Parcelamento($app);
     	});
+		
 		
     }
 	

@@ -18,15 +18,9 @@ class Recebiveis {
 	protected $filesystem;
 	
 	# Método construtor (Parâmetros necessários para utilizar a função)
-	public function __construct(
-		$valorTotal 	  = 0, 
-		$parcelas 		  = 1, 
-		$parcelasSemJuros = 0, 
-		$parcelaMinima    = 0, 
-		$mdr 			  = 0
-	){
-		
-		$this->valorTotal        = ( isset($valorTotal) ? number_format($valorTotal, 2, '.', '') : 0 );
+	public function __construct($valorTotal = 0, $parcelas = 1, $parcelasSemJuros = 0, $parcelaMinima = 0, $mdr = 0){
+				
+		$this->valorTotal        = $valorTotal;
         $this->parcelas          = $parcelas;
         $this->parcelasSemJuros  = $parcelasSemJuros;
         $this->parcelaMinima     = number_format($parcelaMinima, 2, '.', '');
@@ -53,18 +47,18 @@ class Recebiveis {
 		$object = collect();	
 		
 		# Valor total da transação
-		$object->put('grossAmount', str_replace(".", "", $this->valorTotal));	
+		$object->put('grossAmount', str_replace(".", "", $this->valorTotal / 100));	
 		
 		# Valor líquido da transação
-		$object->put('netAmount', ltrim(str_replace(".", "", $calculoParcelas->valorLiquido), "0"));			
+		$object->put('netAmount', str_replace(".", "", ltrim($calculoParcelas->valorLiquido, "0")));			
 		
 		# Desconto aplicado no valor total
-		$object->put('fee', ltrim(str_replace(".", "", $calculoParcelas->descontoMDR), "0"));	
+		$object->put('fee', str_replace(".", "", ltrim($calculoParcelas->descontoMDR, "0")));	
 		
 		# Caso seja apenas uma parcela
 		$parcelas[1] = [
-			'fee' 		  => str_replace(".", "", ltrim($calculoParcelas->taxaPrimeiraParcela, "0")),
-			'amount' 	  => str_replace(".", "", ltrim($calculoParcelas->parcelas['primeira'], "0"))
+			'fee' 	 => str_replace(".", "", ltrim($calculoParcelas->taxaPrimeiraParcela, "0")),
+			'amount' => str_replace(".", "", ltrim($calculoParcelas->valorPrimeiraParcela, "0"))
 		];			
 		
 		# Calcula as demais parcelas
@@ -72,8 +66,8 @@ class Recebiveis {
 							
 			# Adiciona as parcelas dentro do objeto installments
 			$parcelas[$i] = [
-				'fee'         => str_replace(".", "", ltrim($calculoParcelas->taxaPorParcela, "0")),
-			    'amount'      => str_replace(".", "", ltrim($calculoParcelas->parcelas['demais'], "0"))
+				'fee'    => str_replace(".", "", ltrim($calculoParcelas->taxaPorParcela, "0")),
+			    'amount' => str_replace(".", "", ltrim($calculoParcelas->valorPorParcela, "0"))
 			];	
 				
 			 	
@@ -109,16 +103,16 @@ class Recebiveis {
 	private function validaParcelas($object) {
 				
 		# Soma das parcelas	
-		$somaParcelas = $object->parcelas['primeira'] + ($object->parcelas['demais'] * ($this->parcelas - 1));
+		$somaParcelas = $object->valorPrimeiraParcela + ($object->valorPorParcela * ($this->parcelas - 1));
 						
 		# Se a soma das parcelas ultrapassar o valor líquido
 		if ($somaParcelas > $object->valorLiquido) {
-			$object->parcelas['primeira'] = $object->parcelas['primeira'] - ($somaParcelas - $object->valorLiquido);
+			$object->valorPrimeiraParcela = $object->valorPrimeiraParcela - ($somaParcelas - $object->valorLiquido);
 		};
 		
 		# Se a soma das parcelas for menor que o valor líquido
 		if ($somaParcelas < $object->valorLiquido){
-			$object->parcelas['primeira'] = $object->valorLiquido - ($object->valorLiquido - $somaParcelas);
+			$object->valorPrimeiraParcela = $object->valorLiquido - ($object->valorLiquido - $somaParcelas);
 		}
 		
 	}
@@ -130,23 +124,23 @@ class Recebiveis {
 		$object 			          = new \stdClass();
 		
 		# Adiciona as variáveis no objeto a ser retornado
-   		$object->descontoMDR 	      = (int) str_replace(".", "", number_format($this->valorTotal / 100 * $this->mdr, 2));	
+   		$object->descontoMDR 	      = number_format(($this->valorTotal / 100) / 100 * $this->mdr, 2);	
 		
 		# Valor líquido da transação
-		$object->valorLiquido         = (int) str_replace(".", "", number_format($this->valorTotal - ($object->descontoMDR / 100), 2, ".", ""));
+		$object->valorLiquido         = number_format(($this->valorTotal / 100) - $object->descontoMDR, 2, ".", "");
 					
 		# Desconto que deve ser aplicado por parcela
-		$object->taxaPorParcela       = (int) str_replace(".", "", number_format(($object->descontoMDR / 100) / $this->parcelas, 2, ".", ""));
+		$object->taxaPorParcela       = number_format($object->descontoMDR / $this->parcelas, 2, ".", "");
 				
 		# Verifica se existe sobra na divisão da taxa de desconto / parcela
-		$object->taxaPrimeiraParcela  = (int) str_replace(".", "", number_format(($object->descontoMDR / 100) - (($object->taxaPorParcela / 100) * ($this->parcelas - 1)), 2, ".", ""));
+		$object->taxaPrimeiraParcela  = number_format($object->descontoMDR - ($object->taxaPorParcela * ($this->parcelas - 1)), 2, ".", "");
 				
 		# Calcula o valor por parcela
-		$object->parcelas['demais']   = (int) str_replace(".", "", number_format(($object->valorLiquido / 100) / $this->parcelas, 2, ".", ""));
-		
-		# Adiciona as variáveis no objeto a ser retornado
-   		$object->parcelas['primeira'] = (int) str_replace(".", "", number_format(($object->valorLiquido / 100) - floor(( (($object->parcelas['demais'] / 100) * ($this->parcelas - 1))) * 100) / 100, 2, ".", ""));
+		$object->valorPorParcela      = number_format($object->valorLiquido / $this->parcelas, 2, ".", "");
 				
+		# Adiciona as variáveis no objeto a ser retornado
+   		$object->valorPrimeiraParcela = number_format($object->valorLiquido - floor(( ($object->valorPorParcela * ($this->parcelas - 1))) * 100) / 100, 2, ".", "");
+					
 		# Verifica os cálculos das parcelas
 		$this->validaParcelas($object);
 		
