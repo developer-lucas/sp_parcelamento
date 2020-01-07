@@ -35,7 +35,7 @@ class ParcelamentoServiceProvider extends ServiceProvider
 		if ($this->app->runningInConsole()) {
 			
 			$this->publishes([
-            	__DIR__.'/../config/Parcelamento.php' => config_path('Parcelamento.php'),
+            	'/../config/Parcelamento.php' => config_path('Parcelamento.php'),
 			]);
 			
 		};
@@ -46,7 +46,7 @@ class ParcelamentoServiceProvider extends ServiceProvider
     {
 				
 		# Registrando o arquivo de configuração do nosso pacote
-        $this->mergeConfigFrom(__DIR__.'/../config/Parcelamento.php', 'Config');
+        $this->mergeConfigFrom('/../config/Parcelamento.php', 'Config');
         $this->commands($this->commands);
 		
 		$this->app->bind(TemporaryFileFactory::class, function () {
