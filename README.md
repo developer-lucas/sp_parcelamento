@@ -54,8 +54,6 @@ $parcelamento = new Recebiveis();
 
 $parcelamento->setValorTotal(1000.00);
 $parcelamento->setParcelas(10);
-$parcelamento->setParcelasSemJuros(5);
-$parcelamento->setParcelaMinima(50.00);
 $parcelamento->setMDR(2.50);
 
 $parcelamento->gerarRecebiveis();
