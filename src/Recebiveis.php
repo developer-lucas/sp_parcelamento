@@ -44,16 +44,16 @@ class Recebiveis {
 		$parcelas = array();
 		
 		# Cria a coleção que será retornada
-		$object = collect();	
+		$object = new \stdClass();	
 		
 		# Valor total da transação
-		$object->put('grossAmount', str_replace(".", "", $this->valorTotal / 100));	
+		$object->grossAmount = str_replace(".", "", $this->valorTotal / 100);	
 		
 		# Valor líquido da transação
-		$object->put('netAmount', str_replace(".", "", ltrim($calculoParcelas->valorLiquido, "0")));			
+		$object->netAmount = str_replace(".", "", ltrim($calculoParcelas->valorLiquido, "0"));			
 		
 		# Desconto aplicado no valor total
-		$object->put('fee', str_replace(".", "", ltrim($calculoParcelas->descontoMDR, "0")));	
+		$object->fee = str_replace(".", "", ltrim($calculoParcelas->descontoMDR, "0"));	
 		
 		# Caso seja apenas uma parcela
 		$parcelas[1] = [
@@ -74,10 +74,10 @@ class Recebiveis {
 		}
 		
 		# Inclui as parcelas na coleção
-		$object->put('installments', $parcelas);
+		$object->installments = $parcelas;
 		
 		# Retorna o objeto
-		return json_encode($object);
+		return $object;
 		
 	}
 	
