@@ -48,7 +48,7 @@ $parcelamento->gerarRecebiveis();
 Ou se preferir:
 ```php
 <?php
-use Parcel\Parcelamento\Recebiveis;
+use Softpay\Parcelamento\Recebiveis;
 
 $parcelamento = new Recebiveis();
 
