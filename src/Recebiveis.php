@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Softpay\Parcelamento\Contracts\CustomServiceInterface;
 use Softpay\Parcelamento\Files\Filesystem;
 use Softpay\Parcelamento\Files\TemporaryFile;
+use Carbon\Carbon;
 
 class Recebiveis {
 	
@@ -15,16 +16,18 @@ class Recebiveis {
 	private $parcelasSemJuros;    
     private $parcelaMinima;
     private $mdr;
+	private $data;
 	protected $filesystem;
 	
 	# Método construtor (Parâmetros necessários para utilizar a função)
-	public function __construct($valorTotal = 0, $parcelas = 1, $parcelasSemJuros = 0, $parcelaMinima = 0, $mdr = 0){
+	public function __construct($valorTotal = 0, $parcelas = 1, $parcelasSemJuros = 0, $parcelaMinima = 0, $mdr = 0, $data = 0){
 				
 		$this->valorTotal        = str_replace(".", "", $valorTotal);
         $this->parcelas          = $parcelas;
         $this->parcelasSemJuros  = $parcelasSemJuros;
         $this->parcelaMinima     = number_format($parcelaMinima, 2, '.', '');
         $this->mdr               = $mdr;
+		$this->data				 = ( $data == 0 ? Carbon::now() : $data );
 		
     }
 	
@@ -85,13 +88,14 @@ class Recebiveis {
 	
 	# Verifica a soma das taxas
 	private function validaTaxas($object) {
-		
+				
 		# Soma das taxas
-		$somaTaxas = $object->taxaPrimeiraParcela + ($object->taxaPorParcela * ($this->parcelas - 1));
-		
+		$somaTaxas = $object->taxaPrimeiraParcela + ($object->taxaPorParcela * ($this->parcelas - 1));		
+					
 		# Se a soma das parcelas ultrapassar o valor líquido
 		if ($somaTaxas > $object->descontoMDR) {
-			$object->taxaPrimeiraParcela = $object->taxaPrimeiraParcela - ($somaTaxas - $object->valorLiquido);
+			$object->taxaPrimeiraParcela = $object->taxaPrimeiraParcela - ($somaTaxas - $object->descontoMDR);
+			
 		};
 		
 		# Se a soma das parcelas for menor que o valor líquido
@@ -106,7 +110,7 @@ class Recebiveis {
 				
 		# Soma das parcelas	
 		$somaParcelas = $object->valorPrimeiraParcela + ($object->valorPorParcela * ($this->parcelas - 1));
-						
+								
 		# Se a soma das parcelas ultrapassar o valor líquido
 		if ($somaParcelas > $object->valorLiquido) {
 			$object->valorPrimeiraParcela = $object->valorPrimeiraParcela - ($somaParcelas - $object->valorLiquido);
@@ -126,7 +130,7 @@ class Recebiveis {
 		$object 			          = new \stdClass();
 		
 		# Adiciona as variáveis no objeto a ser retornado
-   		$object->descontoMDR 	      = number_format(($this->valorTotal / 100) / 100 * $this->mdr, 2);	
+   		$object->descontoMDR 	      = number_format(($this->valorTotal / 100) / 100 * $this->mdr, 2, ".", "");	
 		
 		# Valor líquido da transação
 		$object->valorLiquido         = number_format(($this->valorTotal / 100) - $object->descontoMDR, 2, ".", "");
@@ -174,6 +178,10 @@ class Recebiveis {
 	public function setMDR($mdr) {
         $this->mdr = $mdr;
     }
+	
+	public function setData($data){
+		$this->data = ( $data == 0 ? Carbon::now() : $data );
+	}
 	
 	########## Métodos GET ##############
 	public function getValorTotal(){
