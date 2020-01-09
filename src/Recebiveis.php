@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Softpay\Parcelamento\Contracts\CustomServiceInterface;
 use Softpay\Parcelamento\Files\Filesystem;
 use Softpay\Parcelamento\Files\TemporaryFile;
-use Carbon\Carbon;
 
 class Recebiveis {
 	
@@ -16,18 +15,16 @@ class Recebiveis {
 	private $parcelasSemJuros;    
     private $parcelaMinima;
     private $mdr;
-	private $data;
 	protected $filesystem;
 	
 	# Método construtor (Parâmetros necessários para utilizar a função)
-	public function __construct($valorTotal = 0, $parcelas = 1, $parcelasSemJuros = 0, $parcelaMinima = 0, $mdr = 0, $data = 0){
+	public function __construct($valorTotal = 0, $parcelas = 1, $parcelasSemJuros = 0, $parcelaMinima = 0, $mdr = 0){
 				
 		$this->valorTotal        = str_replace(".", "", $valorTotal);
         $this->parcelas          = $parcelas;
         $this->parcelasSemJuros  = $parcelasSemJuros;
         $this->parcelaMinima     = number_format($parcelaMinima, 2, '.', '');
         $this->mdr               = $mdr;
-		$this->data				 = ( $data == 0 ? Carbon::now() : $data );
 		
     }
 	
@@ -178,10 +175,6 @@ class Recebiveis {
 	public function setMDR($mdr) {
         $this->mdr = $mdr;
     }
-	
-	public function setData($data){
-		$this->data = ( $data == 0 ? Carbon::now() : $data );
-	}
 	
 	########## Métodos GET ##############
 	public function getValorTotal(){
