@@ -2,7 +2,7 @@
  <a href="https://www.softpay.com.br"><img src="https://console.europag.com.br/assets/images/softpay.png" title="Softpay" alt="Softpay"></a>
 </p>
 
-A Softpay Tecnologia em meios de pagamentos é uma empresa especializada no fornecimento de tecnologias para Adquirentes e Subadquirentes. Atualmente são mais de 40 milhões de vendas processadas todos os anos.
+A Softpay e Siscof Tecnologia em meios de pagamentos é uma empresa especializada no fornecimento de tecnologias para Adquirentes e Subadquirentes. Atualmente são mais de 40 milhões de vendas processadas todos os anos.
 
 # Módulo Recebíveis
 
