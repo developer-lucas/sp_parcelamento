@@ -87,17 +87,17 @@ class Recebiveis {
 	private function validaTaxas($object) {
 				
 		# Soma das taxas
-		$somaTaxas = $object->taxaPrimeiraParcela + ($object->taxaPorParcela * ($this->parcelas - 1));		
-					
+		$somaTaxas 	 = str_replace(".", "", $object->taxaPrimeiraParcela + ($object->taxaPorParcela * ($this->parcelas - 1)));	
+		$descontoMDR = str_replace(".", "", $object->descontoMDR);
+									
 		# Se a soma das parcelas ultrapassar o valor líquido
-		if ($somaTaxas > $object->descontoMDR) {
-			$object->taxaPrimeiraParcela = $object->taxaPrimeiraParcela - ($somaTaxas - $object->descontoMDR);
-			
+		if ($somaTaxas > $descontoMDR) {
+			$object->taxaPrimeiraParcela = number_format($object->taxaPrimeiraParcela - ($somaTaxas - $descontoMDR), 2, ".", "");
 		};
 		
 		# Se a soma das parcelas for menor que o valor líquido
-		if ($somaTaxas < $object->descontoMDR){
-			$object->taxaPrimeiraParcela = $object->descontoMDR - ($object->descontoMDR - $somaTaxas);
+		if ($somaTaxas < $descontoMDR){
+			$object->taxaPrimeiraParcela = number_format($descontoMDR - ($descontoMDR - $somaTaxas), 2, ".", "");	
 		}
 		
 	}
@@ -106,16 +106,18 @@ class Recebiveis {
 	private function validaParcelas($object) {
 				
 		# Soma das parcelas	
-		$somaParcelas = $object->valorPrimeiraParcela + ($object->valorPorParcela * ($this->parcelas - 1));
-								
+		$somaParcelas 		  = str_replace(".", "", $object->valorPrimeiraParcela + ($object->valorPorParcela * ($this->parcelas - 1)));
+		$valorLiquido		  = str_replace(".", "", $object->valorLiquido);
+		$valorPrimeiraParcela = str_replace(".", "", $object->valorPrimeiraParcela);		
+												
 		# Se a soma das parcelas ultrapassar o valor líquido
-		if ($somaParcelas > $object->valorLiquido) {
-			$object->valorPrimeiraParcela = $object->valorPrimeiraParcela - ($somaParcelas - $object->valorLiquido);
+		if ($somaParcelas > $valorLiquido) {			
+			$object->valorPrimeiraParcela = number_format($valorPrimeiraParcela - ($somaParcelas - $valorLiquido), 2, ".", "");			
 		};
 		
 		# Se a soma das parcelas for menor que o valor líquido
-		if ($somaParcelas < $object->valorLiquido){
-			$object->valorPrimeiraParcela = $object->valorLiquido - ($object->valorLiquido - $somaParcelas);
+		if ($somaParcelas < $object->valorLiquido){	
+			$object->valorPrimeiraParcela = number_format($valorLiquido - ($valorLiquido - $somaParcelas), 2, ".", "");
 		}
 		
 	}
