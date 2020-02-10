@@ -92,12 +92,12 @@ class Recebiveis {
 									
 		# Se a soma das parcelas ultrapassar o valor líquido
 		if ($somaTaxas > $descontoMDR) {			
-			$object->taxaPrimeiraParcela = number_format($object->taxaPrimeiraParcela - ($somaTaxas - $descontoMDR), 2, ".", "");
+			$object->taxaPrimeiraParcela = $object->taxaPrimeiraParcela - ($somaTaxas - $descontoMDR);
 		};
 		
 		# Se a soma das parcelas for menor que o valor líquido
 		if ($somaTaxas < $descontoMDR){
-			$object->taxaPrimeiraParcela = number_format($descontoMDR - ($descontoMDR - $somaTaxas), 2, ".", "");	
+			$object->taxaPrimeiraParcela = $descontoMDR - ($descontoMDR - $somaTaxas);	
 		}
 		
 	}
@@ -112,12 +112,12 @@ class Recebiveis {
 												
 		# Se a soma das parcelas ultrapassar o valor líquido
 		if ($somaParcelas > $valorLiquido) {			
-			$object->valorPrimeiraParcela = number_format($valorPrimeiraParcela - ($somaParcelas - $valorLiquido), 2, ".", "");			
+			$object->valorPrimeiraParcela = $valorPrimeiraParcela - ($somaParcelas - $valorLiquido);			
 		};
 		
 		# Se a soma das parcelas for menor que o valor líquido
 		if ($somaParcelas < $object->valorLiquido){	
-			$object->valorPrimeiraParcela = number_format($valorLiquido - ($valorLiquido - $somaParcelas), 2, ".", "");
+			$object->valorPrimeiraParcela = $valorLiquido - ($valorLiquido - $somaParcelas);
 		}
 		
 	}
