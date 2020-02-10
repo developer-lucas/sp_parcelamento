@@ -87,11 +87,11 @@ class Recebiveis {
 	private function validaTaxas($object) {
 				
 		# Soma das taxas
-		$somaTaxas 	 = str_replace(".", "", $object->taxaPrimeiraParcela + ($object->taxaPorParcela * ($this->parcelas - 1)));	
+		$somaTaxas 	 = str_replace(".", "", number_format($object->taxaPrimeiraParcela + ($object->taxaPorParcela * ($this->parcelas - 1)), 2, ".", ""));	
 		$descontoMDR = str_replace(".", "", $object->descontoMDR);
 									
 		# Se a soma das parcelas ultrapassar o valor líquido
-		if ($somaTaxas > $descontoMDR) {
+		if ($somaTaxas > $descontoMDR) {			
 			$object->taxaPrimeiraParcela = number_format($object->taxaPrimeiraParcela - ($somaTaxas - $descontoMDR), 2, ".", "");
 		};
 		
